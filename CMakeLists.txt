@@ -19,9 +19,14 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU|Intel")
   add_compile_options(-Wall)
 endif()
 
+if(MINGW)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
+endif()
+
 find_package(OpenMP COMPONENTS CXX)
 
-set(SOURCES main.cpp model.cpp our_gl.cpp tgaimage.cpp)
+set(SOURCES model.cpp our_gl.cpp tgaimage.cpp
+        LessonOne.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} PRIVATE $<$<BOOL:${OpenMP_CXX_FOUND}>:OpenMP::OpenMP_CXX>)
